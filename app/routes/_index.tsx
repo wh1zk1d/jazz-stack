@@ -6,33 +6,19 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="grid h-screen place-items-center text-center">
+      <div>
+        <h1 className="mb-2 text-lg font-semibold">
+          Welcome to the Remix Jazz Stack!
+        </h1>
+        <p>
+          Edit{" "}
+          <code className="rounded-lg bg-slate-100 px-2 py-1">
+            /app/routes/_index.tsx
+          </code>{" "}
+          to get started.
+        </p>
+      </div>
     </div>
   )
 }
