@@ -7,3 +7,7 @@ npx create-remix@latest --template wh1zk1d/jazz-stack
 ```
 
 ## What's in the stack
+
+- Code formatting with [Prettier](https://prettier.io/)
+- Linting with [ESLint](https://eslint.org/)
+- Static Types with [TypeScript](https://typescriptlang.org/)
