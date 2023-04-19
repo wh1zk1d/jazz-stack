@@ -1,3 +1,5 @@
+import type { LoaderArgs } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -6,9 +8,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react"
-import { Logo } from "~/components/Logo"
+
 import { config } from "~/config"
 import stylesheet from "~/styles/tailwind.css"
+import { getUser } from "~/utils/session.server"
+
+export async function loader({ request }: LoaderArgs) {
+  return json({
+    user: await getUser(request),
+  })
+}
 
 export default function App() {
   return (
@@ -21,8 +30,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen antialiased">
-        <Logo />
+      <body className="h-full antialiased">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

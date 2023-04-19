@@ -1,10 +1,19 @@
-import type { ActionArgs } from "@remix-run/node"
+import type { ActionArgs, LoaderArgs } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
 import type { V2_MetaFunction } from "@remix-run/react"
 import { json } from "@remix-run/node"
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react"
 import { z } from "zod"
 import { transformFieldErrors } from "~/utils/form.server"
 import { FieldError } from "~/components/FieldError"
+import { verifyLogin } from "~/models/user.server"
+import { createUserSession, getUserId } from "~/utils/session.server"
+
+export async function loader({ request }: LoaderArgs) {
+  const userId = await getUserId(request)
+  if (userId) return redirect("/")
+  return json({})
+}
 
 const LoginSchema = z.object({
   email: z.string().email(),
@@ -30,9 +39,29 @@ export async function action({ request }: ActionArgs) {
     )
   }
 
-  // Todo: Handle login
+  const { email, password } = result.data
 
-  return json({ success: true, errors: null, message: null })
+  const user = await verifyLogin(email, password)
+
+  if (!user) {
+    return json(
+      {
+        success: false,
+        errors: null,
+        message: "Invalid email or password",
+      },
+      {
+        status: 400,
+      }
+    )
+  }
+
+  return createUserSession({
+    request,
+    userId: user.id,
+    remember: false,
+    redirectTo: "/",
+  })
 }
 
 export const meta: V2_MetaFunction = () => {
@@ -82,6 +111,9 @@ export default function Login() {
           <button type="submit">
             {isSubmitting ? "Logging in…" : "Log in"}
           </button>
+          {!actionData?.success && actionData?.message ? (
+            <p className="text-red-600">{actionData?.message}</p>
+          ) : null}
         </fieldset>
       </Form>
 
