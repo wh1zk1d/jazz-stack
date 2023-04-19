@@ -6,8 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react"
-import stylesheet from "~/styles/tailwind.css"
+import { Logo } from "~/components/Logo"
 import { config } from "~/config"
+import stylesheet from "~/styles/tailwind.css"
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Links />
       </head>
       <body className="min-h-screen antialiased">
+        <Logo />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
