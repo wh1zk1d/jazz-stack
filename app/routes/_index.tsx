@@ -1,7 +1,8 @@
 import type { V2_MetaFunction } from "@remix-run/react"
+import { config } from "~/config"
 
 export const meta: V2_MetaFunction = () => {
-  return [{ title: "New Remix App" }]
+  return [{ title: config.appName }]
 }
 
 export default function Index() {
