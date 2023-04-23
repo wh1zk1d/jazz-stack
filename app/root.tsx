@@ -34,7 +34,9 @@ export default function App() {
       </head>
       <body className="grid min-h-screen grid-rows-[auto,1fr] bg-slate-50 antialiased">
         <Header />
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
