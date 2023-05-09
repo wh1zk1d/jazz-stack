@@ -15,7 +15,7 @@ export function Header() {
         <div className="flex items-center space-x-4 text-sm">
           <Link
             to="/profile"
-            className="inline-flex items-center rounded-md bg-transparent p-2 transition-colors hover:bg-slate-50"
+            className="inline-flex items-center rounded-lg bg-transparent p-2 transition-colors hover:bg-slate-50"
           >
             <UserCircleIcon className="mr-1.5 h-4 w-4" /> {user.email}
           </Link>

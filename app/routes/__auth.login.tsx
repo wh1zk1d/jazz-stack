@@ -1,12 +1,17 @@
 import type { ActionArgs, LoaderArgs } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 import type { V2_MetaFunction } from "@remix-run/react"
-import { json } from "@remix-run/node"
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react"
+import {
+  Form,
+  Link,
+  useActionData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react"
 import { z } from "zod"
-import { transformFieldErrors } from "~/utils/form.server"
-import { FieldError } from "~/components/FieldError"
+import { FieldError } from "~/components/Primitives"
 import { verifyLogin } from "~/models/user.server"
+import { transformFieldErrors } from "~/utils/form.server"
 import { createUserSession, getUserId } from "~/utils/session.server"
 
 export async function loader({ request }: LoaderArgs) {
@@ -18,6 +23,7 @@ export async function loader({ request }: LoaderArgs) {
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().nonempty(),
+  redirectTo: z.string(),
 })
 
 export async function action({ request }: ActionArgs) {
@@ -39,7 +45,7 @@ export async function action({ request }: ActionArgs) {
     )
   }
 
-  const { email, password } = result.data
+  const { email, password, redirectTo } = result.data
 
   const user = await verifyLogin(email, password)
 
@@ -60,7 +66,7 @@ export async function action({ request }: ActionArgs) {
     request,
     userId: user.id,
     remember: false,
-    redirectTo: "/",
+    redirectTo,
   })
 }
 
@@ -71,6 +77,9 @@ export const meta: V2_MetaFunction = () => {
 export default function Login() {
   const navigation = useNavigation()
   const actionData = useActionData<typeof action>()
+
+  const [searchParams] = useSearchParams()
+  const redirectTo = searchParams.get("redirectTo") || "/"
 
   const isSubmitting =
     navigation.state === "submitting" && navigation.formMethod === "post"
@@ -107,6 +116,8 @@ export default function Login() {
             />
             <FieldError message={actionData?.errors?.password} />
           </div>
+
+          <input type="hidden" name="redirectTo" value={redirectTo} />
 
           <button type="submit">
             {isSubmitting ? "Logging in…" : "Log in"}

@@ -72,10 +72,14 @@ export async function logout(request: Request) {
   })
 }
 
-export async function requireUserId(request: Request) {
+export async function requireUserId(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname
+) {
   const userId = await getUserId(request)
   if (!userId) {
-    throw redirect("/login")
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]])
+    throw redirect(`/login?${searchParams}`)
   }
   return userId
 }
