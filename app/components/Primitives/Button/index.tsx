@@ -1,11 +1,17 @@
 import { twMerge } from "tailwind-merge"
 
 const baseClasses =
-  "rounded-md px-4 py-2.5 text-sm font-semibold leading-none transition-colors"
+  "rounded-md px-4 py-2.5 text-sm font-semibold leading-none transition-colors inline-block"
 
 const variants = {
   default: "bg-slate-700 text-slate-50 hover:bg-slate-800",
   danger: "bg-rose-100 text-rose-800 hover:bg-rose-200",
+  light: "bg-slate-100 text-slate-800 hover:bg-slate-200",
+}
+
+export const buttonClasses = {
+  base: baseClasses,
+  variants,
 }
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {

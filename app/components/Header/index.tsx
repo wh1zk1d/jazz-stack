@@ -7,8 +7,8 @@ export function Header() {
   const user = useOptionalUser()
 
   return (
-    <header className="flex h-20 items-center justify-between bg-white px-6 shadow-sm">
-      <Link to="/" className="font-semibold">
+    <header className="flex h-[72px] items-center justify-between bg-white px-6 pr-4 shadow-sm">
+      <Link to="/" className="font-semibold text-sm">
         {config.appName}
       </Link>
       {user ? (
@@ -20,11 +20,7 @@ export function Header() {
             <UserCircleIcon className="mr-1.5 h-4 w-4" /> {user.email}
           </Link>
         </div>
-      ) : (
-        <Link to="/login" className="text-sm">
-          Login
-        </Link>
-      )}
+      ) : null}
     </header>
   )
 }

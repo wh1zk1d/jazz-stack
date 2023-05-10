@@ -28,11 +28,13 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="icon" href={`https://emojicdn.elk.sh/${config.emojiLogo}`} />
+        {/* Inter font */}
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         <link rel="stylesheet" href={stylesheet} />
         <Meta />
         <Links />
       </head>
-      <body className="grid min-h-screen grid-rows-[auto,1fr] bg-slate-50 antialiased">
+      <body className="grid min-h-screen grid-rows-[auto,1fr] bg-slate-50 text-slate-700 antialiased">
         <Header />
         <main>
           <Outlet />
