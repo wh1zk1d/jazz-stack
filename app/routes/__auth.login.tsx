@@ -12,6 +12,7 @@ import { z } from "zod"
 import { FieldError } from "~/components/Primitives"
 import { verifyLogin } from "~/models/user.server"
 import { transformFieldErrors } from "~/utils/form.server"
+import { safeRedirect } from "~/utils/misc"
 import { createUserSession, getUserId } from "~/utils/session.server"
 
 export async function loader({ request }: LoaderArgs) {
@@ -45,7 +46,8 @@ export async function action({ request }: ActionArgs) {
     )
   }
 
-  const { email, password, redirectTo } = result.data
+  const { email, password } = result.data
+  const redirectTo = safeRedirect(result.data.redirectTo)
 
   const user = await verifyLogin(email, password)
 
