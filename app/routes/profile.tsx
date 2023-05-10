@@ -28,26 +28,8 @@ export default function Profile() {
         </Form>
       </div>
       <Card>
-        <label htmlFor="email" className="mb-1.5 block text-sm font-semibold">
-          E-Mail
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          defaultValue={user.email}
-          className="w-full rounded-md border-zinc-300"
-        />
-
-        <label htmlFor="password" className="mb-1.5 mt-3 block text-sm font-semibold">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          className="w-full rounded-md border-zinc-300"
-        />
+        <label htmlFor="email">E-Mail</label>
+        <input type="email" id="email" name="email" defaultValue={user.email} />
 
         <Button className="mt-4">Save</Button>
       </Card>

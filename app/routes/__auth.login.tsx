@@ -8,8 +8,9 @@ import {
   useNavigation,
   useSearchParams,
 } from "@remix-run/react"
+import { useEffect, useRef } from "react"
 import { z } from "zod"
-import { FieldError } from "~/components/Primitives"
+import { Button, FieldError } from "~/components/Primitives"
 import { verifyLogin } from "~/models/user.server"
 import { transformFieldErrors } from "~/utils/form.server"
 import { safeRedirect } from "~/utils/misc"
@@ -80,57 +81,81 @@ export default function Login() {
   const navigation = useNavigation()
   const actionData = useActionData<typeof action>()
 
+  const passwordRef = useRef<HTMLInputElement>(null)
+
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") || "/"
 
   const isSubmitting =
     navigation.state === "submitting" && navigation.formMethod === "post"
 
-  return (
-    <div>
-      <h1 className="font-bold">Login</h1>
+  useEffect(() => {
+    if (!actionData?.success && actionData?.message) {
+      if (passwordRef.current) {
+        passwordRef.current.value = ""
+      }
+    }
+  }, [actionData])
 
-      <Form method="POST">
-        <fieldset className="my-8 space-y-4" disabled={isSubmitting}>
+  return (
+    <>
+      <Form method="POST" className="mb-4">
+        <fieldset className="space-y-4" disabled={isSubmitting}>
           <div>
-            <label htmlFor="email" className="block">
-              E-Mail
+            <label htmlFor="email">
+              E-Mail{" "}
+              <FieldError
+                className="ml-[2px]"
+                message={actionData?.errors?.email}
+              />
             </label>
             <input
               type="email"
               name="email"
               id="email"
               autoComplete="email"
+              aria-invalid={!!actionData?.errors?.email}
               required
             />
-            <FieldError message={actionData?.errors?.email} />
           </div>
 
           <div>
-            <label htmlFor="password" className="block">
-              Password
+            <label htmlFor="password">
+              Password{" "}
+              <FieldError
+                className="ml-[2px]"
+                message={actionData?.errors?.password}
+              />
             </label>
             <input
               type="password"
               name="password"
               id="password"
               autoComplete="currentPassword"
+              ref={passwordRef}
+              aria-invalid={!!actionData?.errors?.password}
             />
-            <FieldError message={actionData?.errors?.password} />
           </div>
 
           <input type="hidden" name="redirectTo" value={redirectTo} />
 
-          <button type="submit">
+          <Button type="submit">
             {isSubmitting ? "Logging in…" : "Log in"}
-          </button>
+          </Button>
           {!actionData?.success && actionData?.message ? (
-            <p className="text-red-600">{actionData?.message}</p>
+            <p className="text-sm font-semibold text-rose-600">
+              {actionData?.message}
+            </p>
           ) : null}
         </fieldset>
       </Form>
 
-      <Link to="/join">No account yet?</Link>
-    </div>
+      <Link
+        to="/join"
+        className="text-sm text-slate-400 underline underline-offset-2"
+      >
+        No account yet?
+      </Link>
+    </>
   )
 }

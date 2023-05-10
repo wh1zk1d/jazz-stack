@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  label:not([data-unstyled]) {
+    @apply block text-sm font-semibold mb-1.5;
+  }
+
+  :where(input):not([data-unstyled]) {
+    @apply w-full rounded-md border-slate-300 focus:ring-indigo-500 focus:border-indigo-500;
+  }
+}
