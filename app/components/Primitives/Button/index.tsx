@@ -5,7 +5,7 @@ const baseClasses =
 
 const variants = {
   default: "bg-slate-700 text-slate-50 hover:bg-slate-800",
-  danger: "bg-rose-100 text-rose-800 hover:bg-rose-200",
+  danger: "bg-rose-50 text-rose-800 hover:bg-rose-100",
   light: "bg-slate-100 text-slate-800 hover:bg-slate-200",
 }
 

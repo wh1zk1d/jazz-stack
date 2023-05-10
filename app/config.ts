@@ -1,4 +1,4 @@
 export const config = {
-  emojiLogo: "🥁",
+  emojiLogo: "🎛️",
   appName: "Remix Jazz Stack",
 }

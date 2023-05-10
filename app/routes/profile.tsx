@@ -38,6 +38,17 @@ export default function Profile() {
           defaultValue={user.email}
           className="w-full rounded-md border-zinc-300"
         />
+
+        <label htmlFor="password" className="mb-1.5 mt-3 block text-sm font-semibold">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          className="w-full rounded-md border-zinc-300"
+        />
+
         <Button className="mt-4">Save</Button>
       </Card>
     </Container>
