@@ -5,6 +5,8 @@ export function PageTitle({
   className,
 }: React.ComponentPropsWithoutRef<"h1">) {
   return (
-    <h1 className={twMerge("text-xl font-semibold", className)}>{children}</h1>
+    <h1 className={twMerge("text-2xl font-bold tracking-tight", className)}>
+      {children}
+    </h1>
   )
 }

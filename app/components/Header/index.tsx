@@ -8,7 +8,7 @@ export function Header() {
 
   return (
     <header className="flex h-[72px] items-center justify-between bg-white px-6 pr-4 shadow-sm">
-      <Link to="/" className="font-semibold text-sm">
+      <Link to="/" className="text-sm font-semibold">
         {config.appName}
       </Link>
       {user ? (
@@ -17,7 +17,7 @@ export function Header() {
             to="/profile"
             className="inline-flex items-center rounded-lg bg-transparent p-2 transition-colors hover:bg-slate-50"
           >
-            <UserCircleIcon className="mr-1.5 h-4 w-4" /> {user.email}
+            <UserCircleIcon className="mr-2 h-4 w-4" /> {user.email}
           </Link>
         </div>
       ) : null}
